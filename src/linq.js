@@ -9,14 +9,14 @@ const exLinq = function () {
     }
     this.sum = function (array, expression) {
         var total = undefined;
-        forEach(array, function (item) {
+        this.forEach(array, function (item) {
             total += expression(item); //expression(item, total);
         });
         return total;
     }
     this.avg = function (array, expression) {
         var result = undefined;
-        forEach(array, function (item) {
+        this.forEach(array, function (item) {
             result += expression(item);
         });
 
@@ -24,7 +24,7 @@ const exLinq = function () {
     }
     this.min = function (array, expression) {
         var minValue = undefined;
-        forEach(array, function (item) {
+        this.forEach(array, function (item) {
             var val = expression(item);
             if (minValue === undefined) {
                 minValue = val
@@ -36,7 +36,7 @@ const exLinq = function () {
     }
     this.max = function (array, expression) {
         var maxValue = undefined;
-        forEach(array, function (item) {
+        this.forEach(array, function (item) {
             var val = expression(item);
             if (maxValue === undefined) {
                 maxValue = val;
@@ -44,10 +44,11 @@ const exLinq = function () {
                 maxValue = val;
             }
         });
+        return maxValue;
     }
     this.where = function (array, expression) {
         var finds = [];
-        forEach(array, function (item) {
+        this.forEach(array, function (item) {
             if (expression(item)) {
                 finds.push(item);
             }
@@ -56,7 +57,7 @@ const exLinq = function () {
     }
     this.firstOfDefault = function (array, expression) {
         var findItem = undefined;
-        forEach(array, function (item) {
+        this.forEach(array, function (item) {
             if (findItem === undefined && expression(item)) {
                 findItem = item;
                 return true;
@@ -66,7 +67,7 @@ const exLinq = function () {
     }
     this.indexOf = function (array, expression) {
         var findIndex = -1;
-        forEach(array, function (item, index) {
+        this.forEach(array, function (item, index) {
             if (expression(item)) {
                 findIndex = index;
                 return true;
@@ -76,32 +77,39 @@ const exLinq = function () {
     }
     this.groupBy = function (array, expression) {
         var list = [];
-        forEach(array, function (item, index) {
+        var linq = this;
+        this.forEach(array, function (item, index) {
             var key = expression(item);
             var items = [];
-            forEach(array, function (item2, index2) {
-                if (index != index) {
-                    if (key == expression(item2)) {
-                        items.push(item2);
+            if (!linq.exists(list, function (x) {
+                return x.key == key;
+            })) {
+                linq.forEach(array, function (item2, index2) {
+                    if (index != index2) {
+                        if (key == expression(item2)) {
+                            items.push(item2);
+                        }
                     }
-                }
-            });
-            list.push({
-                key: key,
-                items: items
-            });
+                });
+                list.push({
+                    key: key,
+                    items: items
+                });
+            }
         });
+        return list;
     }
     this.any = function (array, expression) {
         var isFind = false;
-        forEach(array, function (item) {
+        this.forEach(array, function (item) {
             isFind = expression(item);
             return isFind;
         });
+        return isFind;
     }
 
     this.exists = function (array, expression) {
-        return any(array, expression);
+        return this.any(array, expression);
     }
 
 };
