@@ -7,6 +7,13 @@ const exLinq = function () {
             }
         }
     }
+    this.select=function(array,expression){
+        var list=[];
+        this.forEach(array,function(item){
+            return expression(item);
+        });
+        return list;
+    }
     this.sum = function (array, expression) {
         var total = undefined;
         this.forEach(array, function (item) {
