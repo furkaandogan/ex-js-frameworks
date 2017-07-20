@@ -10,7 +10,7 @@ const exLinq = function () {
     this.select=function(array,expression){
         var list=[];
         this.forEach(array,function(item){
-            return expression(item);
+            list.push(expression(item));
         });
         return list;
     }
