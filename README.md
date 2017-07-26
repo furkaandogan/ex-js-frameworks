@@ -17,5 +17,10 @@ helpful libraries for JavaScript programming
 	 - .avg
 	 - .min
 	 - .max
+	 - .remove
+	 - .take
+	 - .skip
+	 - .orderBy
+	 - .orderByDescending
 	
 
