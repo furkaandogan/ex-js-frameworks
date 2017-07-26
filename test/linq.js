@@ -38,10 +38,24 @@ const exLinqTest = function () {
         }
     ];
     this.appendBody = function (html) {
-        document.body.innerHTML = html;
+        document.body.innerHTML += html;
     }
     this.groupBy = function () {
-        var list = linq.groupBy(sampleData, function (x) { return x.city; });
+        var list = sampleData.groupBy(function (x) { return x.city }); //linq.groupBy(sampleData, function (x) { return x.city; });
+        var dataJSON = JSON.stringify(sampleData);
+        var groupListJSON = JSON.stringify(list);
+        this.appendBody("</br> Sample Data </br>" + dataJSON + "</br> result</br>" + groupListJSON);
+        console.log(list);
+    }
+    this.orderBy = function () {
+        var list = sampleData.orderBy(function (x) { return x.city }).select(function(x){ return x.city;}); //linq.groupBy(sampleData, function (x) { return x.city; });
+        var dataJSON = JSON.stringify(sampleData);
+        var groupListJSON = JSON.stringify(list);
+        this.appendBody("</br> Sample Data </br>" + dataJSON + "</br> result</br>" + groupListJSON);
+        console.log(list);
+    }
+    this.orderByDescending = function () {
+        var list = sampleData.orderByDescending(function (x) { return x.city }).select(function(x){ return x.city;}); //linq.groupBy(sampleData, function (x) { return x.city; });
         var dataJSON = JSON.stringify(sampleData);
         var groupListJSON = JSON.stringify(list);
         this.appendBody("</br> Sample Data </br>" + dataJSON + "</br> result</br>" + groupListJSON);
